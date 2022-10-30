@@ -3,10 +3,10 @@ const todoBtn = document.querySelector(".todoBtn");
 const todoUl = document.querySelector(".todoUl");
 
 let toDos = [];
-
 const TODOS_KEY = "toDos";
+// 키값인 toDos를 변수로 선언해주었습니다.
 
-function saveTodo() {
+function saveTodos() {
   localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
 }
 const savedTodos = localStorage.getItem(TODOS_KEY);
@@ -20,6 +20,7 @@ if (savedTodos !== null) {
 function paintTodo(newTodoObj) {
   const li = document.createElement("li");
   li.classList.add("list-item");
+  li.id = newTodoObj.id;
   li.textContent = newTodoObj.text;
   todoUl.appendChild(li);
 
@@ -32,8 +33,12 @@ function paintTodo(newTodoObj) {
 function delTodo(e) {
   const li = e.target.parentElement;
   li.remove();
+  // console.log(li);
   toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
-  saveTodo();
+  saveTodos();
+}
+function removeItem(){
+  
 }
 
 function handleTodo(e) {
@@ -43,7 +48,7 @@ function handleTodo(e) {
   const newTodoObj = { text: newTodo, id: Date.now() };
   toDos.push(newTodoObj);
   paintTodo(newTodoObj);
-  saveTodo();
+  saveTodos();
 }
 
 todoBtn.addEventListener("click", handleTodo);
